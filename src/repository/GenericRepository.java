@@ -17,10 +17,4 @@ public interface GenericRepository<T, ID> {
 
     // Supprimer une entité par son ID
     void deleteById(ID id);
-
-    // Sauvegarder toutes les entités dans un fichier
-    void saveAll() throws IOException;
-
-    // Charger toutes les entités depuis un fichier
-    void loadAll() throws IOException, ClassNotFoundException;
 }

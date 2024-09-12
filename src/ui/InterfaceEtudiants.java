@@ -4,6 +4,7 @@ import entity.Etudiant;
 import repository.EtudiantRepository;
 import service.EtudiantService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -110,7 +111,15 @@ public class InterfaceEtudiants {
         String filiere = scanner.nextLine();
 
         Etudiant etudiant = new Etudiant(nom, prenom, email, telephone, filiere);
-        etudiantService.ajouterEtudiant(etudiant);
+        List<String> erreurs = etudiantService.ajouterEtudiant(etudiant);
+
+        if (!erreurs.isEmpty()) {
+            // Display errors if any
+            System.out.println("Erreurs trouvées : ");
+            erreurs.forEach(System.out::println);
+            // Optionally, prompt the user to re-enter the fields with errors
+            ajouterEtudiant(scanner);  // Recursively prompt for input again if validation failed
+        }
     }
 
     private void afficherMenu() {
@@ -119,7 +128,6 @@ public class InterfaceEtudiants {
         System.out.println("2. Afficher tous les étudiants");
         System.out.println("3. Modifier un étudiant");
         System.out.println("4. Supprimer un étudiant");
-        System.out.println("5. Sauvegarder les étudiants");
         System.out.println("0. Quitter");
         System.out.print("Choisissez une option : ");
     }
